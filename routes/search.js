@@ -9,6 +9,7 @@ var request = require('request');
 var client_id = "S1HUKZ1HASCFAUN4XNZ5CATSOCY1TCF4FHCSILG2NO2RKWLE";
 var client_secret = "OAGV3H2O3EDCHVOHPI203B3K1SOC0LNZUDXW2NBMKS2RICO1";
 
+// require databases in case we need to access this information to compare to radius search
 var Venue      = require('./../db/Venue');
 // var User       = require('./../db/User');
 // var Comment    = require('./../db/Comment');
@@ -21,6 +22,7 @@ var options = {
   }
 };
 
+// helper function to map relevant venue data to array
 var mapData = function(body) {
   var data = JSON.parse(body);
   return data.response.venues.map(function(venue) {
@@ -33,7 +35,9 @@ var mapData = function(body) {
   })
 };
 
+// api search request to search by keyword
 router.get('/query/:query/:longlat', function(req, res){
+  // 
   request('https://api.foursquare.com/v2/venues/search?ll=' + req.params.longlat + 
           '&query=' + req.params.query + 
           '&client_id=' + client_id + 
@@ -48,7 +52,9 @@ router.get('/query/:query/:longlat', function(req, res){
   });
 });
 
-// http://localhost:8000/api/search/radius/1/37.783542,-122.408943/
+// sample search request for HR: http://localhost:8000/api/search/radius/1/37.783542,-122.408943/
+
+// api search request by radius based on long/lat input
 router.get('/radius/:radius/:longlat', function(req, res){
   request('https://api.foursquare.com/v2/venues/search?ll=' + req.params.longlat + 
           '&radius=' + req.params.radius + 
