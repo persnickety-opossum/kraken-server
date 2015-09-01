@@ -28,17 +28,17 @@ var mapData = function(body) {
   return data.response.venues.map(function(venue) {
     return {
       'id': venue.id, 
-      'name': venue.name, 
-      'll': venue.location.lat + ',' + venue.location.lng, 
+      'title': venue.name, 
+      'coordinates': venue.location.lat + ',' + venue.location.lng, 
       'address': venue.location.formattedAddress
     };
   })
 };
 
 // api search request to search by keyword
-router.get('/query/:query/:longlat', function(req, res){
+router.get('/query/:query/:latlong', function(req, res){
   // 
-  request('https://api.foursquare.com/v2/venues/search?ll=' + req.params.longlat + 
+  request('https://api.foursquare.com/v2/venues/search?ll=' + req.params.latlong + 
           '&query=' + req.params.query + 
           '&client_id=' + client_id + 
           '&client_secret=' + client_secret + 
@@ -55,8 +55,8 @@ router.get('/query/:query/:longlat', function(req, res){
 // sample search request for HR: http://localhost:8000/api/search/radius/1/37.783542,-122.408943/
 
 // api search request by radius based on long/lat input
-router.get('/radius/:radius/:longlat', function(req, res){
-  request('https://api.foursquare.com/v2/venues/search?ll=' + req.params.longlat + 
+router.get('/radius/:radius/:latlong', function(req, res){
+  request('https://api.foursquare.com/v2/venues/search?ll=' + req.params.latlong + 
           '&radius=' + req.params.radius + 
           '&client_id=' + client_id + 
           '&client_secret=' + client_secret + 
