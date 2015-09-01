@@ -57,8 +57,6 @@ router.get('/radius/:radius/:longlat', function(req, res){
           '&v=20150831' +
           '&limit=10', function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(JSON.parse(body).length);
-
       res.send(mapData(body));
     }
   });
