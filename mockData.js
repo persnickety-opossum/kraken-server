@@ -25,7 +25,13 @@ user2.save();
 var hackreactor = new Venue({
   title: 'Hack Reactor',
   attendees: 1,
-  ratings: [10,9,8],
+  ratings: [{
+    rating: 10,
+    user: user1.id
+  }, {
+    rating: 8,
+    user: user2.id
+  }],
   description: 'The CS degree for the 21st century',
   address: '944 Market St. #8, San Francisco, CA',
   coordinates: '37.783585,-122.408955',
@@ -37,7 +43,13 @@ hackreactor.save();
 var tempest = new Venue({
   title: 'Tempest',
   attendees: 1,
-  ratings: [3,8,5],
+  ratings: [{
+    rating: 5,
+    user: user1.id
+  }, {
+    rating: 9,
+    user: user2.id
+  }],
   description: 'No-frills watering hole',
   address: '431 Natoma St., San Francisco, CA',
   coordinates: '37.7811679,-122.4062895',
@@ -88,7 +100,7 @@ comment4.save();
 
 var comment5 = new Comment({
   creator: user1.id,
-  content: 'Swiggity swooty I\'m coming for that booty',
+  content: 'arglebargle',
   venue: tempest.id,
   datetime: new Date().toISOString(),
   atVenue: false,
