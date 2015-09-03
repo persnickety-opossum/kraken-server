@@ -10,7 +10,11 @@ var VenueSchema = new mongoose.Schema({
     default: 0
   },
   ratings: [{
-    type: Number
+    rating: Number,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
   }],
   description: {
     type: String

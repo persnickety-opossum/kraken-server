@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var findOrCreate = require('mongoose-findorcreate');
 
 var UserSchema = new mongoose.Schema({
   token: String,
@@ -11,6 +12,7 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
+UserSchema.plugin(findOrCreate);
 var User = mongoose.model('User', UserSchema);
 
 module.exports = User;
