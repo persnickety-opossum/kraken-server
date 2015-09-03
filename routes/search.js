@@ -3,15 +3,14 @@ var https      = require('https');
 var router     = express.Router();
 var app        = express();
 
-if (process.env !== undefined) var config = require('../config');
+if (!process.env.production) var config = require('../config');
+var fsID = process.env.FSQR_ID || config.fs.id;
+var fsSecret = process.env.FSQR_SECRET || config.fs.secret;
 
 var request    = require('request');
 
 // require databases in case we need to access this information to compare to radius search
 var Venue = require('./../db/Venue');
-
-var fsID = process.env.FSQR_ID || config.fs.id;
-var fsSecret = process.env.FSQR_SECRET || config.fs.secret;
 
 // helper function to map relevant venue data to array
 var mapData = function(body) {
