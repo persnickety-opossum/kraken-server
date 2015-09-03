@@ -27,8 +27,11 @@ app.use('/api/users', usersRoute);
 app.use('/api/comments', commentsRoute);
 app.use('/api/search', searchRoute);
 
-app.listen(8000, function() {
-  console.log("Listening on Port 8000");
+app.set('port', (process.env.PORT || 5000));
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
+
 
 module.exports = app;

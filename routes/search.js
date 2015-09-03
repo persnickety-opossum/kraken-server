@@ -5,9 +5,8 @@ var app        = express();
 
 var request = require('request');
 
-// Todo: Test account, not for production!
-var client_id = "S1HUKZ1HASCFAUN4XNZ5CATSOCY1TCF4FHCSILG2NO2RKWLE";
-var client_secret = "OAGV3H2O3EDCHVOHPI203B3K1SOC0LNZUDXW2NBMKS2RICO1";
+var client_id = process.env.FSQR_ID || ''
+var client_secret = process.env.FSQR_SECRET || ''
 
 // require databases in case we need to access this information to compare to radius search
 var Venue      = require('./../db/Venue');

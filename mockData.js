@@ -3,7 +3,9 @@ var Comment = require('./db/Comment');
 var User = require('./db/User');
 var Venue = require('./db/Venue');
 
-mongoose.connect('mongodb://localhost/wazkraken');
+var dbConnection = process.env.DB || '';
+mongoose.connect(dbConnection);
+
 Venue.find().remove().exec();
 User.find().remove().exec();
 Comment.find().remove().exec();
