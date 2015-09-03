@@ -60,7 +60,7 @@ tempest.save();
 
 var comment1 = new Comment({
   creator: user1.id,
-  content: 'Allan\'s hair is amazing.',
+  content: 'Allen\'s hair is amazing.',
   venue: hackreactor.id,
   datetime: new Date().toISOString(),
   atVenue: true,
