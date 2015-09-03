@@ -2,7 +2,9 @@ var express    = require('express');
 var https      = require('https');
 var router     = express.Router();
 var app        = express();
-var config     = require('../config');
+
+if (process.env !== undefined) var config = require('../config');
+
 var request    = require('request');
 
 // require databases in case we need to access this information to compare to radius search

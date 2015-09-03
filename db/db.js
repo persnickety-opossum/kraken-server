@@ -1,6 +1,7 @@
 // Bring Mongoose into the app 
 var mongoose = require( 'mongoose' );
-var config = require( '../config' );
+
+if (process.env !== undefined) var config = require('../config');
 
 // Get the connection string 
 var dbURI = process.env.DB_URI || config.dbURI
