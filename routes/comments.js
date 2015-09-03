@@ -57,7 +57,7 @@ router.post('/', function(req, res) {
                 console.log('Error saving venue with new comment.');
                 return;
               }
-              console.log('Successfully saved venue with new comment.')
+              console.log('Successfully saved venue with new comment.');
               res.send(newComment);
             });
           }
