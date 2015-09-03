@@ -24,11 +24,11 @@ router.get('/:id', function(req, res){
 //for testing POST
 router.post('/', function(req, res) {
   var data = req.body;
-  var addUser = User.create({
+  var addUser = User.findOrCreate({
     token: data.token
   },
-  function(err, newUser) {
-    res.send(newUser);
+  function(err, user, created) {
+    res.send(user);
   });
 });
 
