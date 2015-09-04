@@ -3,8 +3,10 @@ var Comment = require('./db/Comment');
 var User = require('./db/User');
 var Venue = require('./db/Venue');
 
-var dbConnection = process.env.DB || '';
-mongoose.connect(dbConnection);
+if (!process.env.production) var config = require('./config');
+
+var dbURI = process.env.DB_URI || config.dbURI
+mongoose.connect(dbURI);
 
 Venue.find().remove().exec();
 User.find().remove().exec();
@@ -60,7 +62,7 @@ tempest.save();
 
 var comment1 = new Comment({
   creator: user1.id,
-  content: 'Allen\'s hair is amazing.',
+  content: "Allen's hair is amazing.",
   venue: hackreactor.id,
   datetime: new Date().toISOString(),
   atVenue: true,
