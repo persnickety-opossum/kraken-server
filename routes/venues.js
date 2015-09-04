@@ -57,6 +57,9 @@ router.post('/', function(req, res) {
       datetime: data.datetime //a venue will have a time that a specific event starts
     },
     function(err, newVenue){
+      if(err){
+        res.send(err);
+      }
       res.send(newVenue);
     }
   );
