@@ -36,7 +36,8 @@ var hackreactor = new Venue({
   }],
   description: 'The CS degree for the 21st century',
   address: '944 Market St. #8, San Francisco, CA',
-  coordinates: '37.783585,-122.408955',
+  latitude: 37.783585,
+  longitude: -122.408955,
   creator: user1.id,
   datetime: new Date().toISOString()
 });
@@ -54,7 +55,8 @@ var tempest = new Venue({
   }],
   description: 'No-frills watering hole',
   address: '431 Natoma St., San Francisco, CA',
-  coordinates: '37.7811679,-122.4062895',
+  latitude: 37.7811679,
+  longitude: -122.4062895,
   creator: user2.id,
   datetime: new Date().toISOString()
 });

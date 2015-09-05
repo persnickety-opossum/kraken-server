@@ -22,12 +22,18 @@ var VenueSchema = new mongoose.Schema({
   address: {
     type: String
   },
-  coordinates: {
-    type: String
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
   },
   comments: [{
     type : mongoose.Schema.Types.ObjectId,
-    ref: 'Comment'
+    ref: 'Comment',
+    default: []
   }],
   creator: {
     type: mongoose.Schema.Types.ObjectId,
