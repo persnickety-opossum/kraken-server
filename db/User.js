@@ -6,10 +6,7 @@ var UserSchema = new mongoose.Schema({
   venues: [{ //in case we want users to save their favorite venues
     type : mongoose.Schema.Types.ObjectId,
     ref: 'Venue'
-  }],
-  coordinates: { //user's location
-    type: String
-  }
+  }]
 });
 
 UserSchema.plugin(findOrCreate);
