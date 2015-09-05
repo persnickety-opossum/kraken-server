@@ -52,7 +52,8 @@ router.post('/', function(req, res) {
       title: data.title,
       description: data.description,
       address: data.address,
-      coordinates: data.coordinates,
+      latitude: data.latitude,
+      longitude: data.longitude,
       creator: data.creator,
       datetime: data.datetime //a venue will have a time that a specific event starts
     },
