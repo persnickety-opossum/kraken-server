@@ -5,8 +5,9 @@ var Comment     = require('./../db/Comment');
 var Medium     = require('./../db/Medium');
 var Venue       = require('./../db/Venue');
 var User        = require('./../db/User');
-var fs = require('fs');
 
+var crypto = require('crypto');
+var mime = require('mime');
 
 
 router.get('/', function (req, res) {
@@ -24,7 +25,18 @@ router.get('/', function (req, res) {
   });
 })
 
-router.post('/', multer({ dest: 'media/' }).single('file'), function (req, res, next) {
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './media/')
+  },
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(8, function (err, raw) {
+      cb(null, Date.now() + '-' + raw.toString('hex') + '.' + mime.extension(file.mimetype));
+    });
+  }
+});
+
+router.post('/', multer({ storage: storage }).single('file'), function (req, res, next) {
   console.log(req.file);
   var addMedium = Medium.create({
     path: req.file.path,

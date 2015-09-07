@@ -22,8 +22,6 @@ var app = express();
 
 //app.use(express.static(__dirname + '/../app'));
 
-app.use(bodyParser.json({limit: '500mb'}));
-
 // Define routes
 app.use('/api/venues', venuesRoute);
 app.use('/api/users', usersRoute);
