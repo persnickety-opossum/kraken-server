@@ -6,7 +6,7 @@ var db          = require('./db/db');
 
 // Load the models
 var Comment     = require('./db/Comment');
-var Comment     = require('./db/Medium');
+var Medium     = require('./db/Medium');
 var Venue       = require('./db/Venue');
 var User        = require('./db/User');
 
@@ -19,7 +19,7 @@ var mediaRoute = require('./routes/media');
 
 var app = express();
 
-
+app.use(bodyParser.json());
 //app.use(express.static(__dirname + '/../app'));
 
 // Define routes
@@ -27,7 +27,7 @@ app.use('/api/venues', venuesRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/comments', commentsRoute);
 app.use('/api/search', searchRoute);
-app.use('/api/media', mediaRoute);
+//app.use('/api/media', mediaRoute);
 
 app.set('port', (process.env.PORT || 5000));
 
