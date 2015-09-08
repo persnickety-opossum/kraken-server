@@ -44,13 +44,25 @@ router.post('/', function(req, res) {
     },
     function(err, newComment){
       // Add the comment_id to the comments array in the events model
-      Venue.findById(data.venue, function(err, venue){
-        venue.comments.push(newComment._id);
-        venue.save(function(err){
-          //Saved!
-          res.send(newComment);
+      if (newComment) {
+        Venue.findById(data.venue, function(err, venue){
+          if (err) {
+            console.log('Error posting comment.')
+          }
+          else if (venue) {
+            venue.comments.push(newComment._id);
+            venue.save(function(err){
+              //Saved!
+              if (err) {
+                console.log('Error saving venue with new comment.');
+                return;
+              }
+              console.log('Successfully saved venue with new comment.')
+              res.send(newComment);
+            });
+          }
         });
-      });
+      }
     });
 });
 

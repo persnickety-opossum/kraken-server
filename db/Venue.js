@@ -35,6 +35,11 @@ var VenueSchema = new mongoose.Schema({
     ref: 'Comment',
     default: []
   }],
+  media: [{
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'Medium',
+    default: []
+  }],
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
