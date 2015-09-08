@@ -6,16 +6,13 @@ var VenueSchema = new mongoose.Schema({
     required: true
   },
   attendees: {
-    type: Number,
-    default: 0
+    type: Object,
+    default: {}
   },
-  ratings: [{
-    rating: Number,
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  }],
+  ratings: {
+    type: Object,
+    default: {}
+  },
   description: {
     type: String
   },
@@ -49,7 +46,8 @@ var VenueSchema = new mongoose.Schema({
     type: Date,
     required: true
   }
-});
+},
+{minimize: false});
 
 var Venue = mongoose.model('Venue', VenueSchema);
 

@@ -53,6 +53,7 @@ router.post('/', function(req, res) {
           }
           else if (venue) {
             venue.comments.push(newComment._id);
+            venue.attendees[data.creator] = data.datetime;
             venue.save(function(err){
               //Saved!
               if (err) {

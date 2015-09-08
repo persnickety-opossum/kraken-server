@@ -47,7 +47,6 @@ router.get('/:id', function(req, res){
 router.post('/', function(req, res) {
 
   var data = req.body;
-
   var addVenue = Venue.create({
       title: data.title,
       description: data.description,
@@ -59,6 +58,7 @@ router.post('/', function(req, res) {
     },
     function(err, newVenue){
       if(err){
+        console.log(err);
         res.send(err);
       }
       res.send(newVenue);
@@ -66,15 +66,26 @@ router.post('/', function(req, res) {
   );
 });
 
-//mainly for updating a venue's ratings, attendees, and comments
-router.put('/', function(req, res) {
-  var id = req.body._id;
-  Venue.findByIdAndUpdate(id, req.body, function(err) {
-    if (err) {
-      return res.send(500, err);
-    }
+router.post('/rate/:id', function (req, res) {
+  var venue_id = req.params.id;
+  Venue.findById(venue_id).then(function (venue) {
+    venue.ratings[req.body.user] = req.body.rating;
+    venue.save().then(res.send(venue));
+  })
+  .catch(function (err) {
+    console.log(err);
   });
-  res.send(req.body);
 });
+
+//mainly for updating a venue's ratings, attendees, and comments
+// router.put('/', function(req, res) {
+//   var id = req.body._id;
+//   Venue.findByIdAndUpdate(id, req.body, function(err) {
+//     if (err) {
+//       return res.send(500, err);
+//     }
+//   });
+//   res.send(req.body);
+// });
 
 module.exports = router;
