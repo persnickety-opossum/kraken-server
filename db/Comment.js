@@ -22,6 +22,12 @@ var CommentSchema = new mongoose.Schema({
   votes: {
     type: Number,
     default: 0
+  },
+  color: {
+    type: String
+  },
+  icon: {
+    type: String
   }
 });
 
