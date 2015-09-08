@@ -40,7 +40,9 @@ router.post('/', function(req, res) {
       creator: data.creator,
       venue: data.venue,
       datetime: data.datetime,
-      atVenue: data.atVenue
+      atVenue: data.atVenue,
+      color: data.color,
+      icon: data.icon
     },
     function(err, newComment){
       // Add the comment_id to the comments array in the events model
@@ -57,13 +59,17 @@ router.post('/', function(req, res) {
                 console.log('Error saving venue with new comment.');
                 return;
               }
-              console.log('Successfully saved venue with new comment.')
+              console.log('Successfully saved venue with new comment.');
               res.send(newComment);
             });
           }
         });
       }
     });
+});
+
+router.put('/', function(req, res) {
+
 });
 
 module.exports = router;

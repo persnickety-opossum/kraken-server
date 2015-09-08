@@ -2,11 +2,12 @@ var express     = require('express');
 var mongoose    = require('mongoose');
 var bodyParser  = require('body-parser');
 var db          = require('./db/db');
+var path        = require('path');
 //var auth        = require('./utils/authenticate');
 
 // Load the models
 var Comment     = require('./db/Comment');
-var Comment     = require('./db/Medium');
+var Medium     = require('./db/Medium');
 var Venue       = require('./db/Venue');
 var User        = require('./db/User');
 
@@ -19,8 +20,7 @@ var mediaRoute = require('./routes/media');
 
 var app = express();
 
-
-//app.use(express.static(__dirname + '/../app'));
+app.use(bodyParser.json());
 
 // Define routes
 app.use('/api/venues', venuesRoute);

@@ -124,7 +124,7 @@ comment6.save();
 
 hackreactor.comments = [comment1.id, comment2.id, comment3.id];
 hackreactor.save();
-tempest.comments = [comment4.id, comment5.id, comment6.id];
+tempest.comments = [comment4.id, comment5.id, comment6.id, comment1.id, comment2.id, comment3.id];
 tempest.save();
 
 mongoose.connection.close();
