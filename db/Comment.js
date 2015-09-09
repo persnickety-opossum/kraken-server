@@ -23,6 +23,10 @@ var CommentSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  flags: {
+    type: Object,
+    default: {}
+  },
   color: {
     type: String
   },
