@@ -11,7 +11,7 @@ var checkAttendees = function() {
       var attendeeIDs = Object.keys(venue.attendees);
       attendeeIDs.forEach(function (ID) {
         var lastActive = new Date(venue.attendees[ID]);
-        if (currTime - lastActive > 300000) {
+        if (currTime - lastActive > 3600000) {
           delete venue.attendees[ID];
         }
       });
