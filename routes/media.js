@@ -15,8 +15,8 @@ var User    = require('./../db/User');
 if(!process.env.production) var config = require('../config');
 
 // Setting up AWS Credentials
-var AWS_ACCESS_KEY = config.aws.access || process.env.S3_ACCESS;
-var AWS_SECRET_KEY = config.aws.secret || process.env.S3_SECRET;
+var AWS_ACCESS_KEY = process.env.S3_ACCESS || config.aws.access;
+var AWS_SECRET_KEY = process.env.S3_SECRET || config.aws.secret;
 var S3_BUCKET = 'persnickety/media';
 
 // Returns a list of media for a venue
