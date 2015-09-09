@@ -17,6 +17,7 @@ var checkAttendees = function() {
       });
       // Only update the db if users were actually removed from the attendee list
       if (attendeeIDs.length !== Object.keys(venue.attendees).length) {
+        venue.markModified('attendees');
         venue.save();
       }
     });

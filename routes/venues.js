@@ -70,8 +70,10 @@ router.post('/rate/:id', function (req, res) {
   var venue_id = req.params.id;
   Venue.findById(venue_id).then(function (venue) {
     venue.ratings[req.body.user] = req.body.rating;
+    venue.markModified('ratings');
     venue.attendees[req.body.user] = new Date().toISOString();
-    venue.save().then(res.send(venue));
+    venue.markModified('attendees');
+    venue.save().then(function() {res.send(venue)});
   })
   .catch(function (err) {
     console.log(err);
