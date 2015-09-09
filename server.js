@@ -11,6 +11,8 @@ var Medium     = require('./db/Medium');
 var Venue       = require('./db/Venue');
 var User        = require('./db/User');
 
+var tasks = require('./db/tasks');
+
 // Load routes
 var venuesRoute   = require('./routes/venues');
 var usersRoute    = require('./routes/users');
@@ -35,5 +37,6 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
+setInterval(tasks.checkAttendees, 300000);
 
 module.exports = app;
