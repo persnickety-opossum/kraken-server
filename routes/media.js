@@ -2,7 +2,6 @@ var express = require('express')
 var router  = express.Router();
 var multer  = require('multer')
 var aws     = require('aws-sdk');
-var config  = require('../config');
 var request = require('request');
 var crypto  = require('crypto');
 var mime    = require('mime');
@@ -12,6 +11,8 @@ var Comment = require('./../db/Comment');
 var Medium  = require('./../db/Medium');
 var Venue   = require('./../db/Venue');
 var User    = require('./../db/User');
+
+if(!process.env.production) var config = require('../config');
 
 // Setting up AWS Credentials
 var AWS_ACCESS_KEY = config.aws.access || process.env.S3_ACCESS;
