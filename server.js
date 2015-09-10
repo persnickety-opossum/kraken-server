@@ -1,6 +1,7 @@
 var express     = require('express');
 var mongoose    = require('mongoose');
 var bodyParser  = require('body-parser');
+
 var db          = require('./db/db');
 var path        = require('path');
 //var auth        = require('./utils/authenticate');
