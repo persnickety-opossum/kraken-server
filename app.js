@@ -38,14 +38,6 @@ app.set('port', (process.env.PORT || 5000));
 //   console.log('Node app is running on port', app.get('port'));
 // });
 
-// SOCKETS
-var server = require('http').Server(app);
-server.listen(app.get('port'), function() {
-  console.log('Server running...', app.get('port'));
-});
-
-// Using global for now as I'm having issues exporting a module
-global.socket = require('socket.io')(server);
 
 setInterval(tasks.checkAttendees, 300000);
 

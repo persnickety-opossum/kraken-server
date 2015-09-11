@@ -1,4 +1,3 @@
-var socket  = require('../sockets');
 var express = require('express')
 var router  = express.Router();
 var multer  = require('multer')
@@ -73,7 +72,7 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
                     venue.save(function(err) {
                       if (err) console.log(err);
                       else {
-                        socket.emit('media1'/*, { hello: 'world' } pass in data here? */);
+                        global.socket.emit('media1'/*, { hello: 'world' } pass in data here? */);
                         res.status(200).send('OK!');
                       }
                     });
