@@ -74,4 +74,54 @@ describe('Venue Routes', function() {
     });
 
   });
+
+  describe('GET /api/venues/:id', function() {
+
+    it('should respond with the venue with the specified id', function (done) {
+      User.findOrCreate({token: 'testing123'}, function (err, user, created) {
+        supertest(app).post('/api/venues')
+        .send({
+          title: 'Catlantis',
+          description: 'Mythical City of Cats',
+          address: 'The Origin, Atlantic Ocean',
+          latitude: 0,
+          longitude: 0,
+          creator: user._id,
+          datetime: new Date()
+        })
+        .end(function (err, res) {
+          var venue = res.body;
+          supertest(app).get('/api/venues/' + venue._id)
+          .end(function (err, res) {
+            expect(res.body).to.eql(venue);
+            done();
+          });
+        });
+      });
+    });
+
+    it('should respond with an empty object if the specified venue does not exist', function (done) {
+      User.findOrCreate({token: 'testing123'}, function (err, user, created) {
+        supertest(app).post('/api/venues')
+        .send({
+          title: 'Catlantis',
+          description: 'Mythical City of Cats',
+          address: 'The Origin, Atlantic Ocean',
+          latitude: 0,
+          longitude: 0,
+          creator: user._id,
+          datetime: new Date()
+        })
+        .end(function (err, res) {
+          supertest(app).get('/api/venues/rofflewaffle')
+          .end(function (err, res) {
+            expect(res.body).to.eql({});
+            done();
+          });
+        });
+      });
+    });
+
+  });
+
 });
