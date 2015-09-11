@@ -56,6 +56,8 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
 
             // Creating new Medium
             var addMedium = Medium.create({
+              // Todo: AWS passes back a partially encoded URL, 
+              // this should be decoded but doesn't really matter
               path: data.Location,
               creator: req.body.creator,
               venue: req.body.venue,
@@ -72,8 +74,8 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
                     venue.save(function(err) {
                       if (err) console.log(err);
                       else {
-                        global.socket.emit('media1'/*, { hello: 'world' } pass in data here? */);
-                        res.status(200).send('OK!');
+                        global.socket.emit('media-' + req.body.venue, { url: newMedium.path });
+                        res.status(200).send(newMedium.path);
                       }
                     });
                   } else {
