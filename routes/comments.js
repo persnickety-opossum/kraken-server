@@ -42,7 +42,8 @@ router.post('/', function(req, res) {
       datetime: data.datetime,
       atVenue: data.atVenue,
       color: data.color,
-      icon: data.icon
+      icon: data.icon,
+      flags: data.flags
     },
     function(err, newComment){
       // Add the comment_id to the comments array in the events model
@@ -72,8 +73,26 @@ router.post('/', function(req, res) {
     });
 });
 
-router.put('/', function(req, res) {
-
+router.post('/flag/:id', function(req, res) {
+  var comment_id = req.params.id;
+  if (req.body.shouldDelete === false) {
+    Comment.findById(comment_id).then(function(comment) {
+      comment.flags = req.body.flags;
+      comment.markModified('flags');
+      comment.save().then(function() {res.send(comment)});
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+  } else {
+    Comment.remove({_id: comment_id}, function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send('');
+      }
+    });
+  }
 });
 
 module.exports = router;

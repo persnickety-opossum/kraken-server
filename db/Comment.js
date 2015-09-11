@@ -23,13 +23,17 @@ var CommentSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  flags: [{
+    type: String,
+    default: []
+  }],
   color: {
     type: String
   },
   icon: {
     type: String
   }
-});
+}, {minimize: false});
 
 var Comment = mongoose.model('Comment', CommentSchema);
 
