@@ -73,17 +73,6 @@ router.post('/', function(req, res) {
     });
 });
 
-router.put('/', function(req, res) {
-   var id = req.body._id;
-   Comment.findByIdAndUpdate(id, req.body, function(err) {
-     if (err) {
-       return res.send(500, err);
-     }
-   });
-   console.log(req.body);
-   res.send(req.body);
- });
-
 router.post('/flag/:id', function(req, res) {
   var comment_id = req.params.id;
   if (req.body.shouldDelete === false) {
