@@ -12,6 +12,16 @@ router.get('/', function(req, res) {
     });
 });
 
+router.get('/userInfo/:userId', function(req, res) {
+  Comment.find({
+    "creator": req.params.userId
+  })
+    .populate('venue')
+    .exec(function(err, comments) {
+      res.send(comments);
+    })
+});
+
 // Return specific user by ID
 router.get('/:id', function(req, res){
   var user_id = req.params.id;
@@ -31,7 +41,6 @@ router.post('/', function(req, res) {
     res.send(user);
   });
 });
-
 
 
 module.exports = router;
