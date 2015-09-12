@@ -20,7 +20,7 @@ var AWS_SECRET_KEY = process.env.S3_SECRET || config.aws.secret;
 var S3_BUCKET = 'persnickety/media';
 
 // Returns a list of media for a venue
-router.get('/', function (req, res) {
+router.get('/', function (req, res) {  
   var mediaList = [];
   Medium.find({'venue': req.query.venue}, function(err, media) {
     if (media) {
@@ -36,7 +36,6 @@ router.get('/', function (req, res) {
 })
 
 var storage = multer.memoryStorage(); // Stores uploaded files in memory/buffer
-
 router.post('/', multer({ storage: storage }).single('file'), function (req, res, next) {
 
   aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
@@ -44,7 +43,7 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
 
   // Generate random filename
   crypto.pseudoRandomBytes(8, function (err, raw) {
-    if (raw) {
+    if (raw && req.file) {
       var filename = raw.toString('hex') + '.' + mime.extension(req.file.mimetype)
       // Upload to AWS
       s3bucket.createBucket(function() {
@@ -57,6 +56,8 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
 
             // Creating new Medium
             var addMedium = Medium.create({
+              // Todo: AWS passes back a partially encoded URL, 
+              // this should be decoded but doesn't really matter
               path: data.Location,
               creator: req.body.creator,
               venue: req.body.venue,
@@ -72,7 +73,10 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
                     venue.media.push(newMedium._id);
                     venue.save(function(err) {
                       if (err) console.log(err);
-                      res.status(200).send('OK!');
+                      else {
+                        global.socket.emit('media-' + req.body.venue, { url: newMedium.path });
+                        res.status(200).send(newMedium.path);
+                      }
                     });
                   } else {
                     console.log(err);
@@ -88,6 +92,9 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
         }); // s3bucket.upload
       }); // s3bucket.createBucket
     } // if (raw)
+    else {
+      res.status(500).send('No data received...');
+    }
   });
 
 });
