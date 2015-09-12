@@ -1,8 +1,31 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
-var app = require('../server.js');
+var mongoose = require('mongoose');
+var app = require('../server').app;
+app.set('port', 8080);
+var server = require('../server').server;
+
+var User = require('../db/User');
 
 describe('User Routes', function() {
+
+  before(function (done) {
+    var db = mongoose.connect('mongodb://localhost/kraken-test');
+
+    mongoose.connection.on('connected', function () {
+      console.log('Mongoose Connected!');
+      User.findOrCreate({token: 'testing12'}, function (err, newUser, created) {
+        server.listen(app.get('port'), function() {
+          console.log('Server running...', app.get('port'));
+          done()
+        });
+      });
+    });
+  });
+
+  after(function() {
+    User.find().remove().exec();
+  })
 
   describe('GET /api/users', function() {
 

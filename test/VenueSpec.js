@@ -1,10 +1,47 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
-var app = require('../server.js');
+var mongoose = require('mongoose');
+var app = require('../server').app;
+app.set('port', 8080);
+var server = require('../server').server;
 
 var User = require('../db/User');
+var Venue = require('../db/Venue');
 
 describe('Venue Routes', function() {
+
+  var user = null;
+
+  before(function (done) {
+    var db = mongoose.connect('mongodb://localhost/kraken-test');
+
+    mongoose.connection.on('connected', function () {
+      console.log('Mongoose Connected!');
+      User.findOrCreate({token: 'testing123'}, function (err, newUser, created) {
+        user = newUser;
+        var venue = new Venue({
+          title: "Santa's Workshop",
+          description: 'Toy Factory',
+          address: 'The North Pole',
+          latitude: 90,
+          longitude: 0,
+          creator: user._id,
+          datetime: new Date()
+        });
+        venue.save(function() {
+          server.listen(app.get('port'), function() {
+            console.log('Server running...', app.get('port'));
+            done()
+          });
+        });
+      });
+    });
+  });
+
+  after(function() {
+    User.find().remove().exec();
+    Venue.find().remove().exec();
+  })
 
   describe('GET /api/venues', function() {
 
