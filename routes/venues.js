@@ -48,22 +48,24 @@ router.post('/', function(req, res) {
 
   var data = req.body;
   var addVenue = Venue.create({
-      title: data.title,
-      description: data.description,
-      address: data.address,
-      latitude: data.latitude,
-      longitude: data.longitude,
-      creator: data.creator,
-      datetime: data.datetime //a venue will have a time that a specific event starts
-    },
-    function(err, newVenue){
-      if(err){
-        console.log(err);
-        res.send(err);
-      }
-      res.send(newVenue);
+    title: data.title,
+    description: data.description,
+    address: data.address,
+    latitude: data.latitude,
+    longitude: data.longitude,
+    creator: data.creator,
+    datetime: data.datetime //a venue will have a time that a specific event starts
+  },
+  function(err, newVenue){
+    if(err){
+      console.log(err);
+      res.send(err);
     }
-  );
+    Venue.findById(newVenue._id).populate('creator')
+    .exec(function (err, venue) {
+      res.send(venue);
+    });
+  });
 });
 
 router.post('/rate/:id', function (req, res) {

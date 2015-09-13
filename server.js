@@ -2,7 +2,6 @@ var express     = require('express');
 var mongoose    = require('mongoose');
 var bodyParser  = require('body-parser');
 
-var db          = require('./db/db');
 var path        = require('path');
 //var auth        = require('./utils/authenticate');
 
@@ -11,8 +10,6 @@ var Comment     = require('./db/Comment');
 var Medium     = require('./db/Medium');
 var Venue       = require('./db/Venue');
 var User        = require('./db/User');
-
-var tasks = require('./db/tasks');
 
 // Load routes
 var venuesRoute   = require('./routes/venues');
@@ -40,13 +37,11 @@ app.set('port', (process.env.PORT || 5000));
 
 // SOCKETS
 var server = require('http').Server(app);
-server.listen(app.get('port'), function() {
-  console.log('Server running...', app.get('port'));
-});
 
 // Using global for now as I'm having issues exporting a module
 global.socket = require('socket.io')(server);
 
-setInterval(tasks.checkAttendees, 300000);
-
-module.exports = app;
+module.exports = {
+  app: app,
+  server: server
+};

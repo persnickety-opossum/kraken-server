@@ -65,7 +65,10 @@ router.post('/', function(req, res) {
                 return;
               }
               console.log('Successfully saved venue with new comment.');
-              res.send(newComment);
+              Comment.findById(newComment._id).populate('creator').populate('venue')
+              .exec(function (err, comment) {
+                res.send(comment);
+              });
             });
           }
         });
