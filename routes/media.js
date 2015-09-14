@@ -12,7 +12,7 @@ var Medium  = require('./../db/Medium');
 var Venue   = require('./../db/Venue');
 var User    = require('./../db/User');
 
-if(!process.env.production) var config = require('../config');
+if(!(process.env.production || process.env.TRAVIS)) var config = require('../config');
 
 // Setting up AWS Credentials
 var AWS_ACCESS_KEY = process.env.S3_ACCESS || config.aws.access;

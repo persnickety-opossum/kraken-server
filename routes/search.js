@@ -3,7 +3,7 @@ var https = require('https');
 var router = express.Router();
 var app = express();
 
-if(!process.env.production) var config = require('../config');
+if(!(process.env.production || process.env.TRAVIS)) var config = require('../config');
 var fsID = process.env.FSQR_ID || config.fs.id;
 var fsSecret = process.env.FSQR_SECRET || config.fs.secret;
 

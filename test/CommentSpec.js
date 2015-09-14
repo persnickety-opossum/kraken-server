@@ -15,9 +15,7 @@ describe('Comment Routes', function() {
   var venue = null;
 
   before(function (done) {
-    var db = mongoose.connect('mongodb://localhost/kraken-test');
-
-    mongoose.connection.on('connected', function () {
+    var db = mongoose.connect('mongodb://localhost/kraken-test', function() {
       console.log('Mongoose Connected!');
       User.findOrCreate({token: 'testing123'}, function (err, newUser, created) {
         user = newUser;
@@ -54,7 +52,8 @@ describe('Comment Routes', function() {
     User.find().remove().exec();
     Venue.find().remove().exec();
     Comment.find().remove().exec();
-  })
+    mongoose.connection.close();
+  });
 
   describe('GET /api/comments', function() {
 

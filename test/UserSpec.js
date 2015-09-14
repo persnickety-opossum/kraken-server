@@ -10,14 +10,12 @@ var User = require('../db/User');
 describe('User Routes', function() {
 
   before(function (done) {
-    var db = mongoose.connect('mongodb://localhost/kraken-test');
-
-    mongoose.connection.on('connected', function () {
+    var db = mongoose.connect('mongodb://localhost/kraken-test', function() {
       console.log('Mongoose Connected!');
       User.findOrCreate({token: 'testing12'}, function (err, newUser, created) {
         server.listen(app.get('port'), function() {
           console.log('Server running...', app.get('port'));
-          done()
+          done();
         });
       });
     });
@@ -25,7 +23,8 @@ describe('User Routes', function() {
 
   after(function() {
     User.find().remove().exec();
-  })
+    mongoose.connection.close();
+  });
 
   describe('GET /api/users', function() {
 
