@@ -1,12 +1,19 @@
 // Bring Mongoose into the app 
 var mongoose = require( 'mongoose' );
 
-if (!process.env.production) {
-  var config = require('../config');
-}
-// Get the connection string 
-var dbURI = process.env.DB_URI || config.dbURI;
+var dbURI = null;
 
+if (process.env.TRAVIS) {
+  dbURI = 'mongodb://localhost/wazkraken';
+}
+else if (process.env.production) {
+  // Get the connection string 
+  dbURI = process.env.DB_URI;
+}
+else {
+  var config = require('../config');
+  dbURI = config.dbURI;
+}
 // Create the database connection 
 var db = mongoose.connect(dbURI);
 
