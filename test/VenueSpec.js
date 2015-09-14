@@ -13,9 +13,7 @@ describe('Venue Routes', function() {
   var user = null;
 
   before(function (done) {
-    var db = mongoose.connect('mongodb://localhost/kraken-test');
-
-    mongoose.connection.on('connected', function () {
+    var db = mongoose.connect('mongodb://localhost/kraken-test', function() {
       console.log('Mongoose Connected!');
       User.findOrCreate({token: 'testing123'}, function (err, newUser, created) {
         user = newUser;
@@ -31,7 +29,7 @@ describe('Venue Routes', function() {
         venue.save(function() {
           server.listen(app.get('port'), function() {
             console.log('Server running...', app.get('port'));
-            done()
+            done();
           });
         });
       });
@@ -41,7 +39,8 @@ describe('Venue Routes', function() {
   after(function() {
     User.find().remove().exec();
     Venue.find().remove().exec();
-  })
+    mongoose.connection.close();
+  });
 
   describe('GET /api/venues', function() {
 
