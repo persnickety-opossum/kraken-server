@@ -5,3 +5,4 @@ services:
   - mongodb
 env:
   - production=true
+  - DB_URI="mongodb://localhost/wazkraken"
