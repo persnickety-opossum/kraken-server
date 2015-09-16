@@ -33,7 +33,15 @@ router.get('/', function (req, res) {
       res.status(404).send('Venue not found!');
     }
   });
-})
+});
+
+router.get('/:id', function (req, res) {
+  var medium_id = req.params.id;
+  Medium.findById(medium_id).populate('creator').populate('venue')
+  .exec(function (err, medium) {
+    res.send(medium);
+  });
+});
 
 var storage = multer.memoryStorage(); // Stores uploaded files in memory/buffer
 router.post('/', multer({ storage: storage }).single('file'), function (req, res, next) {
