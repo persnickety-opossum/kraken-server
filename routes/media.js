@@ -110,16 +110,16 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
 router.post('/flag/:id', function (req, res) {
   var medium_id = req.params.id;
   if (req.body.shouldDelete === false) {
-    Comment.findById(medium_id).then(function(comment) {
-      comment.flags = req.body.flags;
-      comment.markModified('flags');
-      comment.save().then(function() {res.send(comment)});
+    Medium.findById(medium_id).then(function(medium) {
+      medium.flags = req.body.flags;
+      medium.markModified('flags');
+      medium.save().then(function() {res.send(medium)});
     })
     .catch(function(err) {
       console.log(err);
     });
   } else {
-    Comment.remove({_id: medium_id}, function(err) {
+    Medium.remove({_id: medium_id}, function(err) {
       if (err) {
         console.log(err);
       } else {
