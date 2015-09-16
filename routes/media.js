@@ -25,7 +25,7 @@ router.get('/', function (req, res) {
   Medium.find({'venue': req.query.venue}, function(err, media) {
     if (media) {
       media.forEach(function(medium) {
-        if (medium.path !== undefined) mediaList.push(medium.path);
+        if (medium.path !== undefined) mediaList.push(medium);
       });
       res.send(mediaList);
     }
@@ -33,7 +33,15 @@ router.get('/', function (req, res) {
       res.status(404).send('Venue not found!');
     }
   });
-})
+});
+
+router.get('/:id', function (req, res) {
+  var medium_id = req.params.id;
+  Medium.findById(medium_id).populate('creator').populate('venue')
+  .exec(function (err, medium) {
+    res.send(medium);
+  });
+});
 
 var storage = multer.memoryStorage(); // Stores uploaded files in memory/buffer
 router.post('/', multer({ storage: storage }).single('file'), function (req, res, next) {
@@ -97,6 +105,28 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
     }
   });
 
+});
+
+router.post('/flag/:id', function (req, res) {
+  var medium_id = req.params.id;
+  if (req.body.shouldDelete === false) {
+    Medium.findById(medium_id).then(function(medium) {
+      medium.flags = req.body.flags;
+      medium.markModified('flags');
+      medium.save().then(function() {res.send(medium)});
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+  } else {
+    Medium.remove({_id: medium_id}, function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send('');
+      }
+    });
+  }
 });
 
 module.exports = router;
