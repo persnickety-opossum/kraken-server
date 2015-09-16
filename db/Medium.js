@@ -5,6 +5,10 @@ var MediumSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  thumbPath: {
+    type: String,
+    required: true
+  },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
