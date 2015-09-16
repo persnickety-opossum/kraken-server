@@ -25,7 +25,7 @@ router.get('/', function (req, res) {
   Medium.find({'venue': req.query.venue}, function(err, media) {
     if (media) {
       media.forEach(function(medium) {
-        if (medium.path !== undefined) mediaList.push(medium.path);
+        if (medium.path !== undefined) mediaList.push(medium);
       });
       res.send(mediaList);
     }

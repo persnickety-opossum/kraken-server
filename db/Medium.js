@@ -24,6 +24,10 @@ var MediumSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  flags: [{
+    type: String,
+    default: []
+  }],
   mimetype: {
     type: String,
     default: 'image/jpeg'
