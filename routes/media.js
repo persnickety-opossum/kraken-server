@@ -237,24 +237,29 @@ router.post('/', multer({ storage: storage }).single('file'), function (req, res
 
 router.post('/flag/:id', function (req, res) {
   var medium_id = req.params.id;
-  if (req.body.shouldDelete === false) {
-    Medium.findById(medium_id).then(function(medium) {
+  Medium.findById(medium_id).then(function(medium) {
+    if (req.body.shouldDelete) {
+      Venue.findById(medium.venue).then(function(venue) {
+        venue.media.splice(venue.media.indexOf(medium_id), 1);
+        venue.save();
+      });
+      Medium.remove({_id: medium_id}, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('weeeee')
+          res.send('');
+        }
+      });
+    } else {
       medium.flags = req.body.flags;
       medium.markModified('flags');
       medium.save().then(function() {res.send(medium)});
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
-  } else {
-    Medium.remove({_id: medium_id}, function(err) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send('');
-      }
-    });
-  }
+    }
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
 });
 
 module.exports = router;
