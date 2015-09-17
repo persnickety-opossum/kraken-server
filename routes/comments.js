@@ -78,24 +78,29 @@ router.post('/', function(req, res) {
 
 router.post('/flag/:id', function(req, res) {
   var comment_id = req.params.id;
-  if (req.body.shouldDelete === false) {
-    Comment.findById(comment_id).then(function(comment) {
+  Comment.findById(comment_id).then(function(comment) {
+    if (req.body.shouldDelete) {
+      Venue.findById(comment.venue).then(function(venue) {
+        venue.comments.splice(venue.comments.indexOf(comment_id), 1);
+        venue.save();
+      });
+      Comment.remove({_id: comment_id}, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('weeeee')
+          res.send('');
+        }
+      });
+    } else {
       comment.flags = req.body.flags;
       comment.markModified('flags');
       comment.save().then(function() {res.send(comment)});
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
-  } else {
-    Comment.remove({_id: comment_id}, function(err) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send('');
-      }
-    });
-  }
+    }
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
 });
 
 module.exports = router;
