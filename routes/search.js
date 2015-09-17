@@ -17,14 +17,16 @@ var mapData = function(body) {
   var data = JSON.parse(body);
     return data.response.venues.map(function(venue) {
       if (venue) {
-        return {
-          'id': venue.id,
-          'title': venue.name,
-          'description': venue.categories[0].name || '',
-          'latitude': venue.location.lat,
-          'longitude': venue.location.lng,
-          'address': venue.location.formattedAddress.join(', ')
-        };
+        if (venue.categories[0]) {
+          return {
+            'id': venue.id,
+            'title': venue.name,
+            'description': venue.categories[0].name || '',
+            'latitude': venue.location.lat,
+            'longitude': venue.location.lng,
+            'address': venue.location.formattedAddress.join(', ')
+          };
+        }
       }
   });
 };
