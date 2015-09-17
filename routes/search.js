@@ -19,7 +19,7 @@ var mapData = function(body) {
     return {
       'id': venue.id,
       'title': venue.name,
-      'description': venue.categories[0].name,
+      'description': venue.categories[0].name || '',
       'latitude': venue.location.lat,
       'longitude': venue.location.lng,
       'address': venue.location.formattedAddress.join(', ')
