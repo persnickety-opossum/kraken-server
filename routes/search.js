@@ -15,11 +15,15 @@ var Venue = require('./../db/Venue');
 // helper function to map relevant venue data to array
 var mapData = function(body) {
   var data = JSON.parse(body);
+  var description = '';
+  if (venue.categories[0]) {
+    description = venue.categories[0].name;
+  }
   return data.response.venues.map(function(venue) {
     return {
       'id': venue.id,
       'title': venue.name,
-      'description': venue.categories[0].name || '',
+      'description': description,
       'latitude': venue.location.lat,
       'longitude': venue.location.lng,
       'address': venue.location.formattedAddress.join(', ')
