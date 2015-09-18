@@ -88,7 +88,7 @@ router.post('/flag/:id', function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          console.log('weeeee')
+          global.socket.emit('commentDeleted-' + comment.venue, {});
           res.send('');
         }
       });

@@ -243,14 +243,16 @@ router.post('/flag/:id', function (req, res) {
         venue.media.splice(venue.media.indexOf(medium_id), 1);
         venue.save();
       });
+
       Medium.remove({_id: medium_id}, function(err) {
         if (err) {
           console.log(err);
         } else {
-          console.log('weeeee')
+          global.socket.emit('mediaDeleted-' + medium.venue, {});
           res.send('');
         }
       });
+
     } else {
       medium.flags = req.body.flags;
       medium.markModified('flags');
