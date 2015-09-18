@@ -19,6 +19,7 @@ describe('Venue Routes', function() {
         user = newUser;
         var venue = new Venue({
           title: "Santa's Workshop",
+          foursquareID: 'hohoho',
           description: 'Toy Factory',
           address: 'The North Pole',
           latitude: 90,
@@ -69,6 +70,7 @@ describe('Venue Routes', function() {
         supertest(app).post('/api/venues')
         .send({
           title: 'Catlantis',
+          foursquareID: '123test',
           description: 'Mythical City of Cats',
           address: 'The Origin, Atlantic Ocean',
           latitude: 0,
@@ -91,6 +93,7 @@ describe('Venue Routes', function() {
         supertest(app).post('/api/venues')
         .send({
           title: 'Catlantis',
+          foursquareID: '123test',
           description: 'Mythical City of Cats',
           address: 'The Origin, Atlantic Ocean',
           latitude: 0,
@@ -118,6 +121,7 @@ describe('Venue Routes', function() {
         supertest(app).post('/api/venues')
         .send({
           title: 'Catlantis',
+          foursquareID: '123test',
           description: 'Mythical City of Cats',
           address: 'The Origin, Atlantic Ocean',
           latitude: 0,
@@ -141,6 +145,7 @@ describe('Venue Routes', function() {
         supertest(app).post('/api/venues')
         .send({
           title: 'Catlantis',
+          foursquareID: '123test',
           description: 'Mythical City of Cats',
           address: 'The Origin, Atlantic Ocean',
           latitude: 0,
