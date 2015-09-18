@@ -47,24 +47,37 @@ router.get('/:id', function(req, res){
 router.post('/', function(req, res) {
 
   var data = req.body;
-  var addVenue = Venue.create({
-    title: data.title,
-    description: data.description,
-    address: data.address,
-    latitude: data.latitude,
-    longitude: data.longitude,
-    creator: data.creator,
-    datetime: data.datetime //a venue will have a time that a specific event starts
-  },
-  function(err, newVenue){
-    if(err){
-      console.log(err);
-      res.send(err);
+  // Check foursquare ID to prevent duplication of venues
+  Venue.find({foursquareID: data.foursquareID})
+  .then(function (match) {
+    if (match.length) {
+      res.send(match[0]);
+    } else {
+      var addVenue = Venue.create({
+        title: data.title,
+        foursquareID: data.foursquareID,
+        description: data.description,
+        address: data.address,
+        latitude: data.latitude,
+        longitude: data.longitude,
+        creator: data.creator,
+        datetime: data.datetime //a venue will have a time that a specific event starts
+      },
+      function(err, newVenue){
+        if(err){
+          console.log(err);
+          res.status(500).send(err);
+        }
+        Venue.findById(newVenue._id).populate('creator')
+        .exec(function (err, venue) {
+          res.status(201).send(venue);
+        });
+      });
     }
-    Venue.findById(newVenue._id).populate('creator')
-    .exec(function (err, venue) {
-      res.send(venue);
-    });
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.status(500).send(err);
   });
 });
 
