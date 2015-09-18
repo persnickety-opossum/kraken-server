@@ -5,6 +5,10 @@ var VenueSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  foursquareID: {
+    type: String,
+    required: true
+  },
   attendees: {
     type: Object,
     default: {}
