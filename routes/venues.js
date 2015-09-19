@@ -51,7 +51,10 @@ router.post('/', function(req, res) {
   Venue.find({foursquareID: data.foursquareID})
   .then(function (match) {
     if (match.length) {
-      res.send(match[0]);
+      Venue.findById(match[0]._id).populate('creator')
+      .exec(function (err, venue) {
+        res.send(venue);
+      });
     } else {
       var addVenue = Venue.create({
         title: data.title,

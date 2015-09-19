@@ -21,6 +21,7 @@ describe('Comment Routes', function() {
         user = newUser;
         venue = new Venue({
           title: 'Catlantis',
+          foursquareID: '123test',
           description: 'Mythical City of Cats',
           address: 'The Origin, Atlantic Ocean',
           latitude: 0,
