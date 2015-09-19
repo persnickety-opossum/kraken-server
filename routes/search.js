@@ -15,19 +15,15 @@ var Venue = require('./../db/Venue');
 // helper function to map relevant venue data to array
 var mapData = function(body) {
   var data = JSON.parse(body);
-    return data.response.venues.map(function(venue) {
-      if (venue) {
-        if (venue.categories[0]) {
-          return {
-            'id': venue.id,
-            'title': venue.name,
-            'description': venue.categories[0].name || '',
-            'latitude': venue.location.lat,
-            'longitude': venue.location.lng,
-            'address': venue.location.formattedAddress.join(', ')
-          };
-        }
-      }
+  return data.response.venues.map(function(venue) {
+    return {
+      'id': venue.id,
+      'title': venue.name,
+      'description': venue.categories.length ? venue.categories[0].name : '',
+      'latitude': venue.location.lat,
+      'longitude': venue.location.lng,
+      'address': venue.location.formattedAddress.join(', ')
+    };
   });
 };
 
